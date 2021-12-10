@@ -38,6 +38,7 @@ import java.io.InputStreamReader;
 
 /**
  * The top container to host soft keyboard view(s).
+ * 软键盘View的集装箱，主持一个软件盘View。
  */
 public class SkbContainer extends RelativeLayout implements OnTouchListener {
     /**

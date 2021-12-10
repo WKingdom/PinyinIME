@@ -22,40 +22,40 @@
   balloon="false">
 
   <row>
-    <key icon="@drawable/num1" code="8">
+    <key label="1" code="8">
       <toggle_state state_id="@string/toggle_phone_sym" label="("/>
     </key>
-    <key icon="@drawable/num2" code="9">
+    <key label="2" code="9">
       <toggle_state state_id="@string/toggle_phone_sym" label="/"/>
     </key>
-    <key icon="@drawable/num3" code="10">
+    <key label="3" code="10">
       <toggle_state state_id="@string/toggle_phone_sym" label=")"/>
     </key>
     <key label="-"/>
   </row>
 
   <row>
-    <key icon="@drawable/num4" code="11">
+    <key label="4" code="11">
       <toggle_state state_id="@string/toggle_phone_sym" label="N"/>
     </key>
-    <key icon="@drawable/num5" code="12">
+    <key label="5" code="12">
       <toggle_state state_id="@string/toggle_phone_sym" label="暂 停" code="44"/>
     </key>
-    <key icon="@drawable/num6" code="13">
+    <key label="6" code="13">
       <toggle_state state_id="@string/toggle_phone_sym" label=","/>
     </key>
     <key label="."/>
   </row>
 
   <row>
-    <key icon="@drawable/num7" code="14">
+    <key label="7" code="14">
       <toggle_state state_id="@string/toggle_phone_sym" label="*"
         icon="@drawable/numstar"/>
     </key>
-    <key icon="@drawable/num8" code="15">
+    <key label="8" code="15">
       <toggle_state state_id="@string/toggle_phone_sym" label="等 待" code="51"/>
     </key>
-    <key icon="@drawable/num9" code="16">
+    <key label="9" code="16">
       <toggle_state state_id="@string/toggle_phone_sym" label="\#"/>
         icon="@drawable/numpound"/>
     </key>
@@ -63,10 +63,10 @@
   </row>
 
   <row>
-    <key icon="@drawable/numalt" code="-4" repeat="true">
+    <key label="*#(" code="-4" repeat="true">
       <toggle_state state_id="@string/toggle_phone_sym" label="123" code="-4"/>
     </key>
-    <key icon="@drawable/num0" code="7">
+    <key label="0" code="7">
       <toggle_state state_id="@string/toggle_phone_sym" label="+"/>
     </key>
     <key code="62"/>

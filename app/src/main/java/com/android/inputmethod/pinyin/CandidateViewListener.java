@@ -30,4 +30,5 @@ public interface CandidateViewListener {
     public void onToTopGesture();
 
     public void onToBottomGesture();
+    public void onClickCloseBtn();
 }

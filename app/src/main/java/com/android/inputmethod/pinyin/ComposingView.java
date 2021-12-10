@@ -30,6 +30,7 @@ import android.view.ViewGroup.LayoutParams;
 /**
  * View used to show composing string (The Pinyin string for the unselected
  * syllables and the Chinese string for the selected syllables.)
+ * 拼音字符串View，用于显示输入的拼音。
  */
 public class ComposingView extends View {
     /**
@@ -126,7 +127,9 @@ public class ComposingView extends View {
 
         mFmi = mPaint.getFontMetricsInt();
     }
-
+    /**
+     * 重置拼音字符串View状态
+     */
     public void reset() {
         mComposingStatus = ComposingStatus.SHOW_PINYIN;
     }

@@ -23,20 +23,24 @@ import android.view.inputmethod.EditorInfo;
 
 /**
  * Switcher used to switching input mode between Chinese, English, symbol,etc.
+ * 输入法模式转换器。设置输入法的软键盘。
  */
 public class InputModeSwitcher {
     /**
      * User defined key code, used by soft keyboard.
+     * 用户定义的key的code，用于软键盘。shift键的code。
      */
     private static final int USERDEF_KEYCODE_SHIFT_1 = -1;
 
     /**
      * User defined key code, used by soft keyboard.
+     * 语言键的code
      */
     private static final int USERDEF_KEYCODE_LANG_2 = -2;
 
     /**
      * User defined key code, used by soft keyboard.
+     *  “？123”键的code，作用是与数字键盘的切换。
      */
     private static final int USERDEF_KEYCODE_SYM_3 = -3;
 
@@ -52,6 +56,7 @@ public class InputModeSwitcher {
 
     /**
      * User defined key code, used by soft keyboard.
+     *  微笑按键的code，比如中文时，语言键的上面那个按键
      */
     private static final int USERDEF_KEYCODE_SMILEY_6 = -6;
 
@@ -59,36 +64,42 @@ public class InputModeSwitcher {
     /**
      * Bits used to indicate soft keyboard layout. If none bit is set, the
      * current input mode does not require a soft keyboard.
+     * 第8位指明软键盘的布局。如果最8位为0，那么就表明当前输入法模式不需要软键盘。
      **/
     private static final int MASK_SKB_LAYOUT = 0xf0000000;
 
     /**
      * A kind of soft keyboard layout. An input mode should be anded with
      * {@link #MASK_SKB_LAYOUT} to get its soft keyboard layout.
+     * 指明标准的传统键盘
      */
     private static final int MASK_SKB_LAYOUT_QWERTY = 0x10000000;
 
     /**
      * A kind of soft keyboard layout. An input mode should be anded with
      * {@link #MASK_SKB_LAYOUT} to get its soft keyboard layout.
+     *  指明符号软键盘一
      */
     private static final int MASK_SKB_LAYOUT_SYMBOL1 = 0x20000000;
 
     /**
      * A kind of soft keyboard layout. An input mode should be anded with
      * {@link #MASK_SKB_LAYOUT} to get its soft keyboard layout.
+     * 指明符号软键盘二
      */
     private static final int MASK_SKB_LAYOUT_SYMBOL2 = 0x30000000;
 
     /**
      * A kind of soft keyboard layout. An input mode should be anded with
      * {@link #MASK_SKB_LAYOUT} to get its soft keyboard layout.
+     * 指明微笑软键盘
      */
     private static final int MASK_SKB_LAYOUT_SMILEY = 0x40000000;
 
     /**
      * A kind of soft keyboard layout. An input mode should be anded with
      * {@link #MASK_SKB_LAYOUT} to get its soft keyboard layout.
+     * 指明电话软键盘
      */
     private static final int MASK_SKB_LAYOUT_PHONE = 0x50000000;
 
@@ -101,18 +112,21 @@ public class InputModeSwitcher {
      * should be set with {@link #MASK_LANGUAGE_CN} because it can only be
      * launched from Chinese QWERTY soft keyboard, and it has Chinese icon on
      * soft keyboard.
+     * 第7位指明语言
      */
     private static final int MASK_LANGUAGE = 0x0f000000;
 
     /**
      * Used to indicate the current language. An input mode should be anded with
      * {@link #MASK_LANGUAGE} to get this information.
+     * 指明中文语言。
      */
     private static final int MASK_LANGUAGE_CN = 0x01000000;
 
     /**
      * Used to indicate the current language. An input mode should be anded with
      * {@link #MASK_LANGUAGE} to get this information.
+     * 指明英文语言
      */
     private static final int MASK_LANGUAGE_EN = 0x02000000;
 
@@ -121,95 +135,112 @@ public class InputModeSwitcher {
      * English QWERTY has lowercase and uppercase. For the Chinese QWERTY, these
      * bits are ignored. For phone keyboard layout, these bits can be
      * {@link #MASK_CASE_UPPER} to request symbol page for phone soft keyboard.
+     * 第6位指明软键盘当前的状态，比如高（大写），低（小写）
      */
     private static final int MASK_CASE = 0x00f00000;
 
     /**
      * Used to indicate the current case information. An input mode should be
      * anded with {@link #MASK_CASE} to get this information.
+     *  指明软键盘状态为低（小写）
      */
     private static final int MASK_CASE_LOWER = 0x00100000;
 
     /**
      * Used to indicate the current case information. An input mode should be
      * anded with {@link #MASK_CASE} to get this information.
+     * 明软键盘状态为高（大写）
      */
     private static final int MASK_CASE_UPPER = 0x00200000;
 
     /**
      * Mode for inputing Chinese with soft keyboard.
+     * 中文标准软键盘模式
      */
     public static final int MODE_SKB_CHINESE = (MASK_SKB_LAYOUT_QWERTY | MASK_LANGUAGE_CN);
 
     /**
      * Mode for inputing basic symbols for Chinese mode with soft keyboard.
+     * 中文符号软键盘一模式
      */
     public static final int MODE_SKB_SYMBOL1_CN = (MASK_SKB_LAYOUT_SYMBOL1 | MASK_LANGUAGE_CN);
 
     /**
      * Mode for inputing more symbols for Chinese mode with soft keyboard.
+     * 中文符号软键盘二模式
      */
     public static final int MODE_SKB_SYMBOL2_CN = (MASK_SKB_LAYOUT_SYMBOL2 | MASK_LANGUAGE_CN);
 
     /**
      * Mode for inputing English lower characters with soft keyboard.
+     * 英文小写软键盘模式
      */
     public static final int MODE_SKB_ENGLISH_LOWER = (MASK_SKB_LAYOUT_QWERTY
             | MASK_LANGUAGE_EN | MASK_CASE_LOWER);
 
     /**
      * Mode for inputing English upper characters with soft keyboard.
+     * 英文大写软键盘模式
      */
     public static final int MODE_SKB_ENGLISH_UPPER = (MASK_SKB_LAYOUT_QWERTY
             | MASK_LANGUAGE_EN | MASK_CASE_UPPER);
 
     /**
      * Mode for inputing basic symbols for English mode with soft keyboard.
+     * 英文符号软键盘一模式
      */
     public static final int MODE_SKB_SYMBOL1_EN = (MASK_SKB_LAYOUT_SYMBOL1 | MASK_LANGUAGE_EN);
 
     /**
      * Mode for inputing more symbols for English mode with soft keyboard.
+     * 英文符号软键盘二模式
      */
     public static final int MODE_SKB_SYMBOL2_EN = (MASK_SKB_LAYOUT_SYMBOL2 | MASK_LANGUAGE_EN);
 
     /**
      * Mode for inputing smileys with soft keyboard.
+     * 中文笑脸软键盘模式
      */
     public static final int MODE_SKB_SMILEY = (MASK_SKB_LAYOUT_SMILEY | MASK_LANGUAGE_CN);
 
     /**
      * Mode for inputing phone numbers.
+     * 电话号码软键盘模式
      */
     public static final int MODE_SKB_PHONE_NUM = (MASK_SKB_LAYOUT_PHONE);
 
     /**
      * Mode for inputing phone numbers.
+     * 电话号码大写软键盘模式
      */
     public static final int MODE_SKB_PHONE_SYM = (MASK_SKB_LAYOUT_PHONE | MASK_CASE_UPPER);
 
     /**
      * Mode for inputing Chinese with a hardware keyboard.
+     * 中文硬键盘模式。（即不需要软键盘）
      */
     public static final int MODE_HKB_CHINESE = (MASK_LANGUAGE_CN);
 
     /**
      * Mode for inputing English with a hardware keyboard
+     * 英文硬键盘模式。（即不需要软键盘）
      */
     public static final int MODE_HKB_ENGLISH = (MASK_LANGUAGE_EN);
 
     /**
-     * Unset mode.
+     * Unset mode. 未设置输入法模式。
      */
     public static final int MODE_UNSET = 0;
 
     /**
      * Maximum toggle states for a soft keyboard.
+     * 一个软键盘的切换状态的最大数量。这里的切换状态是指要显示的按键的状态
+     * ，所以这些状态不可能有两个同时出现在一个按键当中。如果有两个同时出现在一个按键当中，那就 不知道要显示哪一个了
      */
     public static final int MAX_TOGGLE_STATES = 4;
 
     /**
-     * The input mode for the current edit box.
+     * The input mode for the current edit box. 当前输入法的模式
      */
     private int mInputMode = MODE_UNSET;
 
@@ -219,6 +250,7 @@ public class InputModeSwitcher {
      * for the current situation (For example, previous mode is a soft keyboard
      * mode to input symbols, and we have a hardware keyboard for the current
      * situation), {@link #mRecentLauageInputMode} will be tried.
+     * 前一个输入法的模式
      **/
     private int mPreviousInputMode = MODE_SKB_CHINESE;
 
@@ -229,26 +261,41 @@ public class InputModeSwitcher {
 
     /**
      * Editor information of the current edit box.
+     * 当前编辑框的 EditorInfo
      */
     private EditorInfo mEditorInfo;
 
     /**
      * Used to indicate required toggling operations.
+     * * 控制当前输入法模式软键盘布局要显示的按键切换状态和要显示的行ID。比如当前软键盘布局中
+     * ，有一个按键有默认状态、和两个切换状态，ToggleStates中的mKeyStates[]保存的就是当前要显示的切换状态
+     * ，如果按键的两个切换状态都没有在mKeyStates[]中
+     * ，那么按键就显示默认状态，如果两个切换状态中有一个在mKeyStates[]中，就显示那个切换状态
+     * 。注意：绝对不可能有一个按键的两个或两个以上的切换状态同时在mKeyStates
+     * []中。ToggleStates不仅控制按键的显示状态，还可以直接控制一行按键的显示
+     * 。mRowIdToEnable保存的就是可显示的行的ID（每行的ID不是唯一的 ，一个ID同时赋值给多行）。只有ID为
+     * mRowIdToEnable 和 ALWAYS_SHOW_ROW_ID 的行才会被显示出来。
+     *
      */
     private ToggleStates mToggleStates = new ToggleStates();
 
     /**
      * The current field is a short message field?
+     *  当前的字段是否是一个短语字段？ 当
+     *  editorInfo.inputType & EditorInfo.TYPE_MASK_VARIATION ==
+     *  EditorInfo.TYPE_MASK_VARIATION 时，被设置为true，否则为false。
      */
     private boolean mShortMessageField;
 
     /**
      * Is return key in normal state?
+     * 是否是正常状态下的 Enter 键？
      */
     private boolean mEnterKeyNormal = true;
 
     /**
      * Current icon. 0 for none icon.
+     * 当前输入法的图标。显示在信号栏的图标。
      */
     int mInputIcon = R.drawable.ime_pinyin;
 
@@ -259,26 +306,31 @@ public class InputModeSwitcher {
 
     /**
      * Key toggling state for Chinese mode.
+     * 软键盘中的按键的切换状态的ID：中文状态。
      */
     private int mToggleStateCn;
 
     /**
      * Key toggling state for Chinese mode with candidates.
+     * 软键盘中的按键的切换状态的ID：中文候选词状态。
      */
     private int mToggleStateCnCand;
 
     /**
      * Key toggling state for English lowwercase mode.
+     * 软键盘中的按键的切换状态的ID：英文小写状态
      */
     private int mToggleStateEnLower;
 
     /**
      * Key toggling state for English upppercase mode.
+     * 软键盘中的按键的切换状态的ID：英文大写状态。
      */
     private int mToggleStateEnUpper;
 
     /**
      * Key toggling state for English symbol mode for the first page.
+     * 软键盘中的按键的切换状态的ID：英文符号一状态。
      */
     private int mToggleStateEnSym1;
 
@@ -299,6 +351,7 @@ public class InputModeSwitcher {
 
     /**
      * Key toggling state for GO action of ENTER key.
+     * 软键盘中的按键的切换状态的ID：Enter键作为go操作状态。
      */
     private int mToggleStateGo;
 
@@ -345,12 +398,14 @@ public class InputModeSwitcher {
     class ToggleStates {
         /**
          * If it is true, this soft keyboard is a QWERTY one.
+         * 是否是标准键盘
          */
         boolean mQwerty;
 
         /**
          * If {@link #mQwerty} is true, this variable is used to decide the
          * letter case of the QWERTY keyboard.
+         * 是否是标准键盘大写模式
          */
         boolean mQwertyUpperCase;
 
@@ -358,16 +413,21 @@ public class InputModeSwitcher {
          * The id of enabled row in the soft keyboard. Refer to
          * {@link com.android.inputmethod.pinyin.SoftKeyboard.KeyRow} for
          * details.
+         * 软键盘中要显示的行的ID。只有ID为 mRowIdToEnable 和 ALWAYS_SHOW_ROW_ID
+         * 行才会被显示出来。
          */
         public int mRowIdToEnable;
 
         /**
          * Used to store all other toggle states for the current input mode.
+         *  这里保持此刻要显示的按键的状态，所以这些状态不可能有两个同时出现在一个按键当中。如果有两个同时出现在一个按键当中，那就
+         *  不知道要显示哪一个了
          */
         public int mKeyStates[] = new int[MAX_TOGGLE_STATES];
 
         /**
          * Number of states to toggle.
+         *  按键切换状态的数量。mKeyStates[]的有用的长度
          */
         public int mKeyStatesNum;
     }
@@ -375,6 +435,7 @@ public class InputModeSwitcher {
     public InputModeSwitcher(PinyinIME imeService) {
         mImeService = imeService;
         Resources r = mImeService.getResources();
+        // 初始化按键各种切换状态的ID 和 行的ID
         mToggleStateCn = Integer.parseInt(r.getString(R.string.toggle_cn));
         mToggleStateCnCand = Integer.parseInt(r
                 .getString(R.string.toggle_cn_cand));
@@ -409,14 +470,32 @@ public class InputModeSwitcher {
                 .getString(R.string.toggle_row_emailaddress));
     }
 
+    /**
+     * 获取当前的输入法模式
+     *
+     * @有效值
+     *      MODE_UNSET（未设置输入法模式）、MODE_SKB_CHINESE（中文标准软键盘模式）、MODE_SKB_SYMBOL1_CN
+     *      （中文符号软键盘一模式）、MODE_SKB_SYMBOL2_CN（中文符号软键盘二模式）、
+     *      MODE_SKB_ENGLISH_LOWER
+     *      （英文小写软键盘模式）、MODE_SKB_ENGLISH_UPPER（英文大写软键盘模式
+     *      ）、MODE_SKB_SYMBOL1_EN（英文符号软键盘一模式
+     *      ）、MODE_SKB_SYMBOL2_EN（英文符号软键盘二模式）、MODE_SKB_SMILEY
+     *      （中文笑脸软键盘模式）、MODE_SKB_PHONE_NUM
+     *      （电话号码软键盘模式）、MODE_SKB_PHONE_SYM（电话号码大写软键盘模式
+     *      ）、MODE_HKB_CHINESE（中文硬键盘模式）、MODE_HKB_ENGLISH（英文硬键盘模式）。
+     */
     public int getInputMode() {
         return mInputMode;
     }
-
+    /**
+     * 获取控制当前输入法模式软键盘布局的按键切换状态和可显示行ID的对象。
+     */
     public ToggleStates getToggleStates() {
         return mToggleStates;
     }
-
+    /**
+     * 获取软键盘 LAYOUT 获取软键盘布局文件资源ID
+     */
     public int getSkbLayout() {
         int layout = (mInputMode & MASK_SKB_LAYOUT);
 
@@ -434,7 +513,10 @@ public class InputModeSwitcher {
         }
         return 0;
     }
-
+    /**
+     * 切换硬键盘的语言模式，返回切换后的语言模式的图标。
+     * 先设置新的输入法语言是中文模式，再判断当前的输入法语言模式是否是中文模式，是的话，就改成英文模式。
+     */
     // Return the icon to update.
     public int switchLanguageWithHkb() {
         int newInputMode = MODE_HKB_CHINESE;
@@ -448,12 +530,17 @@ public class InputModeSwitcher {
         saveInputMode(newInputMode);
         return mInputIcon;
     }
-
+    /**
+     * 通过我们定义的软键盘的按键，切换输入法模式。
+     *
+     * @return the icon to update.
+     */
     // Return the icon to update.
     public int switchModeForUserKey(int userKey) {
         int newInputMode = MODE_UNSET;
 
         if (USERDEF_KEYCODE_LANG_2 == userKey) {
+            // 语言键：显示中文或者英文、中符、英符的键
             if (MODE_SKB_CHINESE == mInputMode) {
                 newInputMode = MODE_SKB_ENGLISH_LOWER;
             } else if (MODE_SKB_ENGLISH_LOWER == mInputMode
@@ -471,6 +558,7 @@ public class InputModeSwitcher {
                 newInputMode = MODE_SKB_CHINESE;
             }
         } else if (USERDEF_KEYCODE_SYM_3 == userKey) {
+            // 系统键：显示“?123”的键
             if (MODE_SKB_CHINESE == mInputMode) {
                 newInputMode = MODE_SKB_SYMBOL1_CN;
             } else if (MODE_SKB_ENGLISH_UPPER == mInputMode
@@ -486,12 +574,14 @@ public class InputModeSwitcher {
                 newInputMode = MODE_SKB_SYMBOL1_CN;
             }
         } else if (USERDEF_KEYCODE_SHIFT_1 == userKey) {
+            // shift键：显示“，” 或者 大小写图标的按键。
             if (MODE_SKB_ENGLISH_LOWER == mInputMode) {
                 newInputMode = MODE_SKB_ENGLISH_UPPER;
             } else if (MODE_SKB_ENGLISH_UPPER == mInputMode) {
                 newInputMode = MODE_SKB_ENGLISH_LOWER;
             }
         } else if (USERDEF_KEYCODE_MORE_SYM_5 == userKey) {
+            // 更多系统键，显示“ALT”的按键
             int sym = (MASK_SKB_LAYOUT & mInputMode);
             if (MASK_SKB_LAYOUT_SYMBOL1 == sym) {
                 sym = MASK_SKB_LAYOUT_SYMBOL2;
@@ -500,12 +590,14 @@ public class InputModeSwitcher {
             }
             newInputMode = ((mInputMode & (~MASK_SKB_LAYOUT)) | sym);
         } else if (USERDEF_KEYCODE_SMILEY_6 == userKey) {
+            // 笑脸键：显示机器人笑脸图标的按键
             if (MODE_SKB_CHINESE == mInputMode) {
                 newInputMode = MODE_SKB_SMILEY;
             } else {
                 newInputMode = MODE_SKB_CHINESE;
             }
         } else if (USERDEF_KEYCODE_PHONE_SYM_4 == userKey) {
+            // 电话键：显示“*#{”或者“123”的按键
             if (MODE_SKB_PHONE_NUM == mInputMode) {
                 newInputMode = MODE_SKB_PHONE_SYM;
             } else {
@@ -516,12 +608,17 @@ public class InputModeSwitcher {
         if (newInputMode == mInputMode || MODE_UNSET == newInputMode) {
             return mInputIcon;
         }
-
+        // 保存新的输入法模式
         saveInputMode(newInputMode);
+        // 准备切换输入法状态
         prepareToggleStates(true);
         return mInputIcon;
     }
-
+    /**
+     * 根据编辑框的 EditorInfo 信息获取硬键盘的输入法模式。
+     *
+     * @return the icon to update.
+     */
     // Return the icon to update.
     public int requestInputWithHkb(EditorInfo editorInfo) {
         mShortMessageField = false;
@@ -568,7 +665,11 @@ public class InputModeSwitcher {
         prepareToggleStates(false);
         return mInputIcon;
     }
-
+    /**
+     * 根据编辑框的 EditorInfo 信息获取软键盘的输入法模式。
+     *
+     * @return the icon to update.
+     */
     // Return the icon to update.
     public int requestInputWithSkb(EditorInfo editorInfo) {
         mShortMessageField = false;
@@ -601,7 +702,7 @@ public class InputModeSwitcher {
                 newInputMode = mInputMode;
                 if (0 == skbLayout) {
                     if ((mInputMode & MASK_LANGUAGE) == MASK_LANGUAGE_CN) {
-                        newInputMode = MODE_SKB_CHINESE;
+                        newInputMode = MODE_SKB_ENGLISH_LOWER;
                     } else {
                         newInputMode = MODE_SKB_ENGLISH_LOWER;
                     }
@@ -614,7 +715,7 @@ public class InputModeSwitcher {
             newInputMode = mInputMode;
             if (0 == skbLayout) {
                 if ((mInputMode & MASK_LANGUAGE) == MASK_LANGUAGE_CN) {
-                    newInputMode = MODE_SKB_CHINESE;
+                    newInputMode = MODE_SKB_ENGLISH_LOWER;
                 } else {
                     newInputMode = MODE_SKB_ENGLISH_LOWER;
                 }
@@ -627,7 +728,9 @@ public class InputModeSwitcher {
         prepareToggleStates(true);
         return mInputIcon;
     }
-
+    /**
+     * 请求返还上一次输入法模式
+     */
     // Return the icon to update.
     public int requestBackToPreviousSkb() {
         int layout = (mInputMode & MASK_SKB_LAYOUT);
@@ -640,15 +743,24 @@ public class InputModeSwitcher {
         }
         return 0;
     }
-
+    /**
+     * 获得中文候选词模式状态
+     *
+     * @return
+     */
     public int getTooggleStateForCnCand() {
         return mToggleStateCnCand;
     }
 
+    /**
+     * 是否是硬键盘输入法模式
+     */
     public boolean isEnglishWithHkb() {
         return MODE_HKB_ENGLISH == mInputMode;
     }
-
+    /**
+     * 是否是软件盘英语模式
+     */
     public boolean isEnglishWithSkb() {
         return MODE_SKB_ENGLISH_LOWER == mInputMode
                 || MODE_SKB_ENGLISH_UPPER == mInputMode;
@@ -698,6 +810,7 @@ public class InputModeSwitcher {
         return mEnterKeyNormal;
     }
 
+    // 长按处理
     public boolean tryHandleLongPressSwitch(int keyCode) {
         if (USERDEF_KEYCODE_LANG_2 == keyCode
                 || USERDEF_KEYCODE_PHONE_SYM_4 == keyCode) {
@@ -793,6 +906,7 @@ public class InputModeSwitcher {
         }
 
         // Toggle state for enter key.
+        // 根据EditorInfo.imeOptions添加 要显示的按键的切换状态 ，以下只添加 Enter 键的切换状态。
         int action = mEditorInfo.imeOptions
                 & (EditorInfo.IME_MASK_ACTION | EditorInfo.IME_FLAG_NO_ENTER_ACTION);
 

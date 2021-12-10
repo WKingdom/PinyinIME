@@ -26,63 +26,75 @@ import android.view.WindowManager;
  * view. All original dimension values are defined in float, and the real size
  * is calculated from the float values of and screen size. In this way, this
  * input method can work even when screen size is changed.
+ *
+ * 该类保存布局的一些尺寸。比如：屏幕的宽度、屏幕的高度
+ * 、按键的高度、候选词区域的高度、按键气泡宽度比按键宽度大的差值、按键气泡高度比按键高度大的差值、正常按键中文本的大小
+ * 、功能按键中文本的大小、正常按键气泡中文本的大小、功能按键气泡中文本的大小。
  */
 public class Environment {
     /**
      * The key height for portrait mode. It is relative to the screen height.
+     * 竖屏按键高度，值是相对于屏幕高度。
      */
     private static final float KEY_HEIGHT_RATIO_PORTRAIT = 0.105f;
 
     /**
      * The key height for landscape mode. It is relative to the screen height.
+     * 横屏按键高度，值是相对于屏幕高度。
      */
-    private static final float KEY_HEIGHT_RATIO_LANDSCAPE = 0.147f;
+    private static final float KEY_HEIGHT_RATIO_LANDSCAPE = 0.127f;
 
     /**
      * The height of the candidates area for portrait mode. It is relative to
      * screen height.
+     * 竖屏候选词区域的高度，值是相对于屏幕高度
      */
     private static final float CANDIDATES_AREA_HEIGHT_RATIO_PORTRAIT = 0.084f;
 
     /**
      * The height of the candidates area for portrait mode. It is relative to
      * screen height.
+     * 横屏候选词区域高度，值是相对于屏幕高度。
      */
-    private static final float CANDIDATES_AREA_HEIGHT_RATIO_LANDSCAPE = 0.125f;
+    private static final float CANDIDATES_AREA_HEIGHT_RATIO_LANDSCAPE = 0.105f;
 
     /**
      * How much should the balloon width be larger than width of the real key.
      * It is relative to the smaller one of screen width and height.
      */
-    private static final float KEY_BALLOON_WIDTH_PLUS_RATIO = 0.08f;
+    private static final float KEY_BALLOON_WIDTH_PLUS_RATIO = 0.01f;
 
     /**
      * How much should the balloon height be larger than that of the real key.
      * It is relative to the smaller one of screen width and height.
      */
-    private static final float KEY_BALLOON_HEIGHT_PLUS_RATIO = 0.07f;
+    private static final float KEY_BALLOON_HEIGHT_PLUS_RATIO = 0.03f;
 
     /**
      * The text size for normal keys. It is relative to the smaller one of
      * screen width and height.
+     * 正常按键的文本的大小，值是相对于屏幕高度和宽度较小的那一个。
      */
-    private static final float NORMAL_KEY_TEXT_SIZE_RATIO = 0.075f;
+    private static final float NORMAL_KEY_TEXT_SIZE_RATIO = 0.065f;
 
     /**
      * The text size for function keys. It is relative to the smaller one of
      * screen width and height.
+     * 功能按键的文本的大小，值是相对于屏幕高度和宽度较小的那一个。
      */
     private static final float FUNCTION_KEY_TEXT_SIZE_RATIO = 0.055f;
 
     /**
      * The text size balloons of normal keys. It is relative to the smaller one
      * of screen width and height.
+     * 正常按键弹出的气泡的文本的大小，值是相对于屏幕高度和宽度较小的那一个
      */
     private static final float NORMAL_BALLOON_TEXT_SIZE_RATIO = 0.14f;
 
     /**
      * The text size balloons of function keys. It is relative to the smaller
      * one of screen width and height.
+     * 功能按键弹出的气泡的文本的大小，值是相对于屏幕高度和宽度较小的那一个
      */
     private static final float FUNCTION_BALLOON_TEXT_SIZE_RATIO = 0.085f;
 
@@ -94,15 +106,15 @@ public class Environment {
     private int mScreenWidth;
     private int mScreenHeight;
     private int mKeyHeight;
-    private int mCandidatesAreaHeight;
-    private int mKeyBalloonWidthPlus;
-    private int mKeyBalloonHeightPlus;
+    private int mCandidatesAreaHeight; // 候选词区域的高度
+    private int mKeyBalloonWidthPlus; // 按键气泡宽度比按键宽度大的差值
+    private int mKeyBalloonHeightPlus;  // 按键气泡高度比按键高度大的差值
     private int mNormalKeyTextSize;
     private int mFunctionKeyTextSize;
     private int mNormalBalloonTextSize;
     private int mFunctionBalloonTextSize;
     private Configuration mConfig = new Configuration();
-    private boolean mDebug = false;
+    private boolean mDebug = true;
 
     private Environment() {
     }

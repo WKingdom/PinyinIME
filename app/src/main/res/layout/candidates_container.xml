@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2009 The Android Open Source Project
+<?xml version="1.0" encoding="UTF-8"?><!-- Copyright (C) 2009 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,40 +13,68 @@
      limitations under the License.
 -->
 <com.android.inputmethod.pinyin.CandidatesContainer xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/candidates_container"
-  android:background="@drawable/cands_container_bg"
-  android:orientation="horizontal"
-  android:layout_width="0dip"
-  android:layout_height="0dip">
+    android:id="@+id/candidates_container"
+    android:layout_width="0dip"
+    android:layout_height="0dip"
+    android:background="@drawable/normal_key_bg"
+    android:orientation="horizontal">
 
-  <ImageButton android:id="@+id/arrow_left_btn"
-    android:background="@drawable/arrow_bg"
-    android:src="@drawable/arrow_left"
-    android:layout_height="match_parent"
-    android:layout_width="30dip"
-    android:clickable="true"
-    android:layout_alignParentLeft="true"/>
+    <ImageButton
+        android:id="@+id/arrow_left_btn"
+        android:layout_width="100dip"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/arrow_bg"
+        android:clickable="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/arrow_left" />
 
-  <ImageButton android:id="@+id/arrow_right_btn"
-    android:background="@drawable/arrow_bg"
-    android:src="@drawable/arrow_right"
-    android:layout_width="30dip"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:layout_alignParentRight="true"/>
+    <ImageButton
+        android:id="@+id/arrow_right_btn"
+        android:layout_width="100dip"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/arrow_bg"
+        android:clickable="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/arrow_right" />
 
-  <ViewFlipper android:id="@+id/candidate_flipper"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_toLeftOf="@id/arrow_right_btn"
-    android:layout_toRightOf="@id/arrow_left_btn">
-    <view class="com.android.inputmethod.pinyin.CandidateView"
-        android:id="@+id/candidate_view1"
+    <ImageButton
+        android:id="@+id/close_ime_btn"
+        android:layout_width="100dip"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/arrow_bg"
+        android:clickable="true"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="30dp"
+        android:scaleType="centerCrop"
+        android:visibility="invisible"
+        android:src="@drawable/close_ime" />
+
+    <ViewFlipper
+        android:id="@+id/candidate_flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <view class="com.android.inputmethod.pinyin.CandidateView"
-        android:id="@+id/candidate_view2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-  </ViewFlipper>
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/arrow_right_btn"
+        android:layout_toRightOf="@id/arrow_left_btn">
+
+        <view
+            android:id="@+id/candidate_view1"
+            class="com.android.inputmethod.pinyin.CandidateView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <view
+            android:id="@+id/candidate_view2"
+            class="com.android.inputmethod.pinyin.CandidateView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ViewFlipper>
 </com.android.inputmethod.pinyin.CandidatesContainer>

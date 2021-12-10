@@ -21,6 +21,7 @@ import android.view.KeyEvent;
 /**
  * Class used to map the symbols on Dream's hardware keyboard to corresponding
  * Chinese full-width symbols.
+ * 硬键盘符号对应表，对应中文全角符号。
  */
 public class KeyMapDream {
     // Number of shift bits to store full-width symbols
@@ -97,7 +98,9 @@ public class KeyMapDream {
             KeyEvent.KEYCODE_FOCUS, KeyEvent.KEYCODE_PLUS,
             KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_NOTIFICATION,
             KeyEvent.KEYCODE_SEARCH,};
-
+    /**
+     * 获取中文全角字符
+     */
     static public char getChineseLabel(int keyCode) {
         if (keyCode <= 0 || keyCode >= KeyEvent.getMaxKeyCode()) return 0;
         assert ((mKeyMap[keyCode] & 0x000000ff) == keyCode);

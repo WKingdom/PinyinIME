@@ -20,7 +20,6 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
@@ -84,26 +83,30 @@ public class PinyinIME extends InputMethodService {
     /**
      * The floating container which contains the composing view. If necessary,
      * some other view like candiates container can also be put here.
+     *  浮动视图集装箱
      */
     private LinearLayout mFloatingContainer;
 
     /**
      * View to show the composing string.
+     * 组成字符串的View，用于显示输入的拼音
      */
     private ComposingView mComposingView;
 
     /**
      * Window to show the composing string.
+     * 用于输入拼音字符串的窗口
      */
     private PopupWindow mFloatingWindow;
 
     /**
      * Used to show the floating window.
      */
-    private PopupTimer mFloatingWindowTimer = new PopupTimer();
+    private final PopupTimer mFloatingWindowTimer = new PopupTimer();
 
     /**
      * View to show candidates list.
+     * 候选词视图集装箱
      */
     private CandidatesContainer mCandidatesContainer;
 
@@ -114,6 +117,7 @@ public class PinyinIME extends InputMethodService {
 
     /**
      * Used to notify the input method when the user touch a candidate.
+     * 当用户选择了候选词或者在候选词视图滑动了手势时的通知输入法。 实现了候选词视图的监听器CandidateViewListener
      */
     private ChoiceNotifier mChoiceNotifier;
 
@@ -1091,6 +1095,11 @@ public class PinyinIME extends InputMethodService {
     }
 
     @Override
+    public boolean onEvaluateFullscreenMode() {
+        return false;
+    }
+
+    @Override
     public View onCreateInputView() {
         if (mEnvironment.needDebug()) {
             Log.d(TAG, "onCreateInputView.");
@@ -1192,7 +1201,7 @@ public class PinyinIME extends InputMethodService {
     @Override
     public void requestHideSelf(int flags) {
         if (mEnvironment.needDebug()) {
-            Log.d(TAG, "DimissSoftInput.");
+            Log.d(TAG, "DismissSoftInput.");
         }
         dismissCandidateWindow();
         if (null != mSkbContainer && mSkbContainer.isShown()) {
@@ -1209,19 +1218,16 @@ public class PinyinIME extends InputMethodService {
         CharSequence itemSettings = getString(R.string.ime_settings_activity_name);
         CharSequence itemInputMethod = getString(R.string.inputMethod);
         builder.setItems(new CharSequence[]{itemSettings, itemInputMethod},
-                new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface di, int position) {
-                        di.dismiss();
-                        switch (position) {
-                            case 0:
-                                launchSettings();
-                                break;
-                            case 1:
-                                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                                inputMethodManager.showInputMethodPicker();
-                                break;
-                        }
+                (di, position) -> {
+                    di.dismiss();
+                    switch (position) {
+                        case 0:
+                            launchSettings();
+                            break;
+                        case 1:
+                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            inputMethodManager.showInputMethodPicker();
+                            break;
                     }
                 });
         builder.setTitle(getString(R.string.ime_name));
@@ -1318,6 +1324,12 @@ public class PinyinIME extends InputMethodService {
         }
 
         public void onToBottomGesture() {
+        }
+
+        @Override
+        public void onClickCloseBtn() {
+            resetToIdleState(false);
+            requestHideSelf(0);
         }
     }
 
@@ -1524,7 +1536,7 @@ public class PinyinIME extends InputMethodService {
         /**
          * Maximum number of candidates to display in one page.
          */
-        private static final int MAX_PAGE_SIZE_DISPLAY = 10;
+        private static final int MAX_PAGE_SIZE_DISPLAY = 25;
         /**
          * The total number of choices for display. The list may only contains
          * the first part. If user tries to navigate to next page which is not

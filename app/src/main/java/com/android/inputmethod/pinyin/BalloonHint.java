@@ -31,20 +31,20 @@ import android.widget.PopupWindow;
 
 /**
  * Subclass of PopupWindow used as the feedback when user presses on a soft key
- * or a candidate.
+ * or a candidate. 气泡对话框
  */
 public class BalloonHint extends PopupWindow {
     /**
-     * Delayed time to show the balloon hint.
+     * Delayed time to show the balloon hint. 延时多长时间显示
      */
     public static final int TIME_DELAY_SHOW = 0;
 
     /**
-     * Delayed time to dismiss the balloon hint.
+     * Delayed time to dismiss the balloon hint. 延时多长时间消失
      */
     public static final int TIME_DELAY_DISMISS = 200;
     /**
-     * The content view of the balloon.
+     * The content view of the balloon. 气泡View
      */
     BalloonView mBalloonView;
     /**
@@ -66,16 +66,19 @@ public class BalloonHint extends PopupWindow {
     /**
      * The measuring specification used to determine its size. Key-press
      * balloons and candidates balloons have different measuring specifications.
+     * 按键气泡和候选词气泡有不同的测量模式
      */
     private int mMeasureSpecMode;
 
     /**
      * Used to indicate whether the balloon needs to be dismissed forcibly.
+     * 气泡是否需要强行销毁。
      */
     private boolean mForceDismiss;
 
     /**
      * Timer used to show/dismiss the balloon window with some time delay.
+     * 气泡显示和销毁的定时器
      */
     private BalloonTimer mBalloonTimer;
 

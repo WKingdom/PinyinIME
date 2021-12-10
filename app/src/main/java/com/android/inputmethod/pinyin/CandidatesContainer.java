@@ -33,6 +33,9 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
+/**
+ * 集装箱中的箭头更新监听器
+ */
 interface ArrowUpdater {
     void updateArrowStatus();
 }
@@ -46,16 +49,17 @@ interface ArrowUpdater {
  * Besides the candidate views, there are two arrow views to show the page
  * forward/backward arrows.
  * </p>
+ * 候选词集装箱
  */
 public class CandidatesContainer extends RelativeLayout implements
         OnTouchListener, AnimationListener, ArrowUpdater {
     /**
-     * Alpha value to show an enabled arrow.
+     * Alpha value to show an enabled arrow. 箭头图片显示时的透明度
      */
     private static int ARROW_ALPHA_ENABLED = 0xff;
 
     /**
-     * Alpha value to show an disabled arrow.
+     * Alpha value to show an disabled arrow. 箭头图片不显示时的透明度
      */
     private static int ARROW_ALPHA_DISABLED = 0x40;
 
@@ -66,7 +70,7 @@ public class CandidatesContainer extends RelativeLayout implements
 
     /**
      * Listener used to notify IME that user clicks a candidate, or navigate
-     * between them.
+     * between them. 候选词视图监听器
      */
     private CandidateViewListener mCvListener;
 
@@ -78,10 +82,11 @@ public class CandidatesContainer extends RelativeLayout implements
     /**
      * The right arrow button used to show next page.
      */
-    private ImageButton mRightArrowBtn;
+    public ImageButton mRightArrowBtn;
+    public ImageButton mCloseImeBtn;
 
     /**
-     * Decoding result to show.
+     * Decoding result to show. 词库解码对象
      */
     private DecodingInfo mDecInfo;
 
@@ -89,17 +94,18 @@ public class CandidatesContainer extends RelativeLayout implements
      * The animation view used to show candidates. It contains two views.
      * Normally, the candidates are shown one of them. When user navigates to
      * another page, animation effect will be performed.
+     * 页面管理，它包含两个视图，正常只显示其中一个，当切换候选词页的时候，就启动另一个视图装载接着要显示的候选词切入进来。
      */
     private ViewFlipper mFlipper;
 
     /**
-     * The x offset of the flipper in this container.
+     * The x offset of the flipper in this container. 在集装箱的偏移位置
      */
     private int xOffsetForFlipper;
 
     /**
      * Animation used by the incoming view when the user navigates to a left
-     * page.
+     * page. 传入页面移动向左边的动画
      */
     private Animation mInAnimPushLeft;
 
@@ -168,14 +174,22 @@ public class CandidatesContainer extends RelativeLayout implements
         super(context, attrs);
     }
 
-    public void initialize(CandidateViewListener cvListener,
-            BalloonHint balloonHint, GestureDetector gestureDetector) {
+    public void initialize(final CandidateViewListener cvListener,
+                           BalloonHint balloonHint, GestureDetector gestureDetector) {
         mCvListener = cvListener;
 
         mLeftArrowBtn = (ImageButton) findViewById(R.id.arrow_left_btn);
         mRightArrowBtn = (ImageButton) findViewById(R.id.arrow_right_btn);
+        mCloseImeBtn = (ImageButton) findViewById(R.id.close_ime_btn);
         mLeftArrowBtn.setOnTouchListener(this);
         mRightArrowBtn.setOnTouchListener(this);
+        mCloseImeBtn.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                cvListener.onClickCloseBtn();
+            }
+        });
 
         mFlipper = (ViewFlipper) findViewById(R.id.candidate_flipper);
         mFlipper.setMeasureAllChildren(true);
@@ -220,6 +234,10 @@ public class CandidatesContainer extends RelativeLayout implements
         return mCurrentPage;
     }
 
+    /**
+     * 设置候选词是否高亮
+     * @param enableActiveHighlight enableActiveHighlight
+     */
     public void enableActiveHighlight(boolean enableActiveHighlight) {
         CandidateView cv = (CandidateView) mFlipper.getCurrentView();
         cv.enableActiveHighlight(enableActiveHighlight);
@@ -242,7 +260,11 @@ public class CandidatesContainer extends RelativeLayout implements
             xOffsetForFlipper = mLeftArrowBtn.getMeasuredWidth();
         }
     }
-
+    /**
+     * 高亮位置向上一个候选词移动或者移动到上一页的最后一个候选词的位置。
+     *
+     * @return
+     */
     public boolean activeCurseBackward() {
         if (mFlipper.isFlipping() || null == mDecInfo) {
             return false;
@@ -323,13 +345,17 @@ public class CandidatesContainer extends RelativeLayout implements
         updateArrowStatus();
         return true;
     }
-
+    /**
+     * 获取活动（高亮）的候选词在所有候选词中的位置
+     */
     public int getActiveCandiatePos() {
         if (null == mDecInfo) return -1;
         CandidateView cv = (CandidateView) mFlipper.getCurrentView();
         return cv.getActiveCandiatePosGlobal();
     }
-
+    /**
+     * 更新箭头显示
+     */
     public void updateArrowStatus() {
         if (mCurrentPage < 0) return;
         boolean forwardEnabled = mDecInfo.pageForwardable(mCurrentPage);
@@ -346,7 +372,12 @@ public class CandidatesContainer extends RelativeLayout implements
             enableArrow(mRightArrowBtn, false);
         }
     }
-
+    /**
+     * 设置箭头图标是否有效，和图标的透明度。
+     *
+     * @param arrowBtn
+     * @param enabled
+     */
     private void enableArrow(ImageButton arrowBtn, boolean enabled) {
         arrowBtn.setEnabled(enabled);
         if (enabled)
@@ -356,10 +387,13 @@ public class CandidatesContainer extends RelativeLayout implements
     }
 
     private void showArrow(ImageButton arrowBtn, boolean show) {
-        if (show)
+        if (show) {
             arrowBtn.setVisibility(View.VISIBLE);
-        else
+            mCloseImeBtn.setVisibility(View.INVISIBLE);
+        }else{
             arrowBtn.setVisibility(View.INVISIBLE);
+            mCloseImeBtn.setVisibility(View.VISIBLE);
+        }
     }
 
     public boolean onTouch(View v, MotionEvent event) {

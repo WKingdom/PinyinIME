@@ -20,7 +20,8 @@ import android.view.KeyEvent;
 import android.view.inputmethod.InputConnection;
 
 /**
- * Class to handle English input. 
+ * Class to handle English input.
+ *  英文输入法按键处理器
  */
 public class EnglishInputProcessor {
 

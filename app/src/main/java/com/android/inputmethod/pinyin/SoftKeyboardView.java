@@ -32,7 +32,7 @@ import android.view.View;
 
 /**
  * Class used to show a soft keyboard.
- * 
+ * <p>
  * A soft keyboard view should not handle touch event itself, because we do bias
  * correction, need a global strategy to map an event into a proper view to
  * achieve better user experience.
@@ -55,13 +55,19 @@ public class SoftKeyboardView extends View {
      */
     private BalloonHint mBalloonOnKey;
 
-    /** Used to play key sounds. */
+    /**
+     * Used to play key sounds.
+     */
     private SoundManager mSoundManager;
 
-    /** The last key pressed. */
+    /**
+     * The last key pressed.
+     */
     private SoftKey mSoftKeyDown;
 
-    /** Used to indicate whether the user is holding on a key. */
+    /**
+     * Used to indicate whether the user is holding on a key.
+     */
     private boolean mKeyPressed = false;
 
     /**
@@ -100,11 +106,15 @@ public class SoftKeyboardView extends View {
      */
     private boolean mMovingNeverHidePopupBalloon = false;
 
-    /** Vibration for key press. */
+    /**
+     * Vibration for key press.
+     */
     private Vibrator mVibrator;
 
-    /** Vibration pattern for key press. */
-    protected long[] mVibratePattern = new long[] {1, 20};
+    /**
+     * Vibration pattern for key press.
+     */
+    protected long[] mVibratePattern = new long[]{1, 20};
 
     /**
      * The dirty rectangle used to mark the area to re-draw during key press and
@@ -122,7 +132,7 @@ public class SoftKeyboardView extends View {
         super(context, attrs);
 
         mSoundManager = SoundManager.getInstance(getContext());
-        
+
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -148,7 +158,7 @@ public class SoftKeyboardView extends View {
     }
 
     public void setBalloonHint(BalloonHint balloonOnKey,
-            BalloonHint balloonPopup, boolean movingNeverHidePopup) {
+                               BalloonHint balloonPopup, boolean movingNeverHidePopup) {
         mBalloonOnKey = balloonOnKey;
         mBalloonPopup = balloonPopup;
         mMovingNeverHidePopupBalloon = movingNeverHidePopup;
@@ -173,7 +183,7 @@ public class SoftKeyboardView extends View {
     }
 
     private void showBalloon(BalloonHint balloon, int balloonLocationToSkb[],
-            boolean movePress) {
+                             boolean movePress) {
         long delay = BalloonHint.TIME_DELAY_SHOW;
         if (movePress) delay = 0;
         if (balloon.needForceDismiss()) {
@@ -211,7 +221,7 @@ public class SoftKeyboardView extends View {
     // moves his finger to this button. If movePress is false, means that this
     // function is called when user just presses this key.
     public SoftKey onKeyPress(int x, int y,
-            SkbContainer.LongPressTimer longPressTimer, boolean movePress) {
+                              SkbContainer.LongPressTimer longPressTimer, boolean movePress) {
         mKeyPressed = false;
         boolean moveWithinPreviousKey = false;
         if (movePress) {
@@ -381,7 +391,7 @@ public class SoftKeyboardView extends View {
             return;
         }
         if (mVibrator == null) {
-            mVibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         }
         mVibrator.vibrate(mVibratePattern, -1);
     }
@@ -435,7 +445,7 @@ public class SoftKeyboardView extends View {
     }
 
     private void drawSoftKey(Canvas canvas, SoftKey softKey, int keyXMargin,
-            int keyYMargin) {
+                             int keyYMargin) {
         Drawable bg;
         int textColor;
         if (mKeyPressed && softKey == mSoftKeyDown) {
@@ -472,7 +482,7 @@ public class SoftKeyboardView extends View {
                     + (softKey.width() - mPaint.measureText(keyLabel)) / 2.0f;
             int fontHeight = mFmi.bottom - mFmi.top;
             float marginY = (softKey.height() - fontHeight) / 2.0f;
-            float y = softKey.mTop + marginY - mFmi.top + mFmi.bottom / 1.5f;
+            float y = softKey.mTop + marginY - mFmi.top + mFmi.bottom / 1.5f + fontHeight / 3f;
             canvas.drawText(keyLabel, x, y + 1, mPaint);
         }
     }

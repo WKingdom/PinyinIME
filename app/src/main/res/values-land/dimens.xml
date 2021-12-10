@@ -15,5 +15,5 @@
 -->
 <resources>
     <dimen name="candidate_margin_left_right">10dip</dimen>
-    <dimen name="composing_height">16dip</dimen>
+    <dimen name="composing_height">30dip</dimen>
 </resources>
