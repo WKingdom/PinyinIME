@@ -518,7 +518,7 @@ public class CandidateView extends View {
             if (mShowFootnote) {
                 footnote = Integer.toString(i + 1);
                 footnoteSize = mFootnotePaint.measureText(footnote);
-                assert (footnoteSize < candMargin);
+//                assert (footnoteSize < candMargin);
             }
             String cand = mDecInfo.mCandidatesList.get(pStart + i);
             float candidateWidth = mCandidatesPaint.measureText(cand);
