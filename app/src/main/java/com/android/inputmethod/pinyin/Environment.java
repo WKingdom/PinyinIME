@@ -89,7 +89,7 @@ public class Environment {
      * of screen width and height.
      * 正常按键弹出的气泡的文本的大小，值是相对于屏幕高度和宽度较小的那一个
      */
-    private static final float NORMAL_BALLOON_TEXT_SIZE_RATIO = 0.14f;
+    private static final float NORMAL_BALLOON_TEXT_SIZE_RATIO = 0.12f;
 
     /**
      * The text size balloons of function keys. It is relative to the smaller
